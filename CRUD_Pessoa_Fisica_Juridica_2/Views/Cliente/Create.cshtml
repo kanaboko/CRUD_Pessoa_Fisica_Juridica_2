@@ -1,0 +1,183 @@
+﻿@model CRUD_Pessoa_Fisica_Juridica_2.ViewModel.AdicionarClienteViewModel
+@using CRUD_Pessoa_Fisica_Juridica_2.ViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>PessoaFisica</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @{
+                var lista = Enum.GetValues(typeof(TipoPessoaViewModel));
+            }
+            @foreach (var radio in lista)
+            {
+                @Html.RadioButtonFor(model => model.Pessoa.TipoPessoa, radio.ToString());
+                @radio.ToString();
+            }
+            @*<div class="col-md-10">
+                    @Html.RadioButtonFor(r => r.Pessoa.TipoPessoa, ListaTipoPessoa.PessoaFisica, new { htmlAttributes = new { @class = "form-control" } })@Html.Label(ListaTipoPessoa.PessoaFisica.ToString(), new { @class="lbl"})
+                    @Html.RadioButtonFor(r => r.Pessoa.TipoPessoa, ListaTipoPessoa.PessoaJuridica, new { htmlAttributes = new { @class = "form-control" } })@Html.Label(ListaTipoPessoa.PessoaJuridica.ToString())
+                </div>*@
+        </div>
+        <div id="replace">
+            @Html.Partial("_AdicionarClienteFisico")
+        </div>
+        @*<div class="panel panel-default" id="painelPessoaFisica" >
+                <div class="panel-heading">Pessoa Fisica</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PessoaFisica.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PessoaFisica.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PessoaFisica.Nome, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PessoaFisica.RG, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PessoaFisica.RG, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PessoaFisica.RG, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PessoaFisica.CPF, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PessoaFisica.CPF, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PessoaFisica.CPF, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default" id="painelPessoaJuridica" >
+                <div class="panel-heading">Pessoa Juridica</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.pessoaJuridica.RazaoSocial, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.pessoaJuridica.RazaoSocial, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.pessoaJuridica.RazaoSocial, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.pessoaJuridica.CNPJ, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.pessoaJuridica.CNPJ, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.pessoaJuridica.CNPJ, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Endereco.Logradouro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Endereco.Logradouro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Endereco.Numero, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Endereco.Numero, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Endereco.Numero, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Endereco.Bairro, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Endereco.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Endereco.Bairro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Endereco.Cidade, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Endereco.Cidade, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Endereco.Cidade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Endereco.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Endereco.Estado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Endereco.Estado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+    //$("#painelPessoaJuridica").hide();
+
+    $("input[value='PessoaFisica']").attr("checked", "checked");
+    $("input[type='radio']").on("click", function () {
+        //$("#myDiv").html($("input:checked").val() + " is checked!");
+
+        //$("input:checked").val() == "PessoaFisica" ? ($("#painelPessoaJuridica").hide(), $("#painelPessoaFisica").show(), HideValidationSummary()) : ($("#painelPessoaJuridica").show(), $("#painelPessoaFisica").hide(), $("#painelPessoaJuridica > [data-val]").attr("data-val", "false"));
+        $("input:checked").val() == "PessoaFisica" ? ($("#replace").load('@Url.Action("CreatePessoaFisica_PartialView","Cliente")')) : ($("#replace").load('@Url.Action("CreatePessoaJuridica_PartialView","Cliente")'));
+    });
+
+
+    //$("input[type='radio']").on("click", function () {
+    //        $.ajax({
+    //            url: this.action,
+    //            type: this.method,
+    //            data: $(this).serialize(),
+    //            success: function (result) {
+    //                var ind = result.indice;
+    //                if (result.success && result.tipo == "pf") {
+    //                    $('#myModal').modal('hide');
+    //                    $('#replacePessoaFisica').load(result.url); // Carrega o resultado HTML para a div demarcada
+    //                } else if (result.success && result.tipo == "pj") {
+    //                    $('#myModal').modal('hide');
+    //                    $('#replacePessoaJuridica').load(result.url); // Carrega o resultado HTML para a div demarcada
+    //                } else if (result.success && result.tipo == "enderecoFisico") {
+    //                    $('#myModal').modal('hide');
+    //                    $('#replaceEnderecoPessoaFisica').load(result.url); // Carrega o resultado HTML para a div demarcada
+
+    //                } else if (result.success && result.tipo == "enderecoJuridico") {
+    //                    $('#myModal').modal('hide');
+    //                    $('#replace-' + ind).load(result.url); // Carrega o resultado HTML para a div demarcada
+    //                } else {
+    //                    $('#myModalContent').html(result);
+    //                    bindForm(dialog);
+    //                }
+    //            }
+    //        });
+    //        return false;
+    //    });
+
+    </script>
+}

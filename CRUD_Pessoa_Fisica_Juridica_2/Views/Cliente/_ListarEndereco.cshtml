@@ -1,0 +1,106 @@
+﻿@model IEnumerable<CRUD_Pessoa_Fisica_Juridica_2.ViewModel.EnderecoViewModel>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Logradouro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Numero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bairro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cidade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Logradouro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bairro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                <a href="@Url.Action("EditEndereco", "Cliente", new { id = item.Id, pessoaId = ViewBag.PessoaId, tipoPessoa = ViewBag.TipoPessoa })" data-modal="" class="btn btn-warning">
+                    <span title="Editar" class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a href="@Url.Action("DeleteEndereco", "Cliente", new { id = item.Id, pessoaId = ViewBag.PessoaId, tipoPessoa = ViewBag.TipoPessoa})" data-modal="" class="btn btn-danger">
+                        <span title="Deletar" class="glyphicon glyphicon-remove"></span>
+                    </a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    <div>
+        <a href="@Url.Action("CreateEndereco", "Cliente", new { pessoaId = ViewBag.PessoaId, tipoPessoa = ViewBag.TipoPessoa })" data-modal="" class="btn btn-primary">
+            <span title="Adicionar" class="glyphicon glyphicon-plus"></span>
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+        $.ajaxSetup({ cache: false });
+
+        $('a[data-modal]').on("click", function (e) {
+            $('#myModalContent').load(this.href, function () {
+                $('#myModal').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }, 'show');
+                bindForm(this);
+            });
+            return false;
+        });
+    });
+
+    function bindForm(dialog) {
+        $('form', dialog).submit(function () {
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    if (result.success) {
+                        $('#myModal').modal('hide');
+                        $('#replace').load(result.url); // Carrega o resultado HTML para a div demarcada
+                    } else {
+                        $('#myModalContent').html(result);
+                        bindForm(dialog);
+                    }
+                }
+            });
+            return false;
+        });
+    }
+
+</script>
+
+@section Scripts{
+
+}

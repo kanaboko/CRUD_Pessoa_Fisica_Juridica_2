@@ -1,0 +1,98 @@
+﻿@model IEnumerable<CRUD_Pessoa_Fisica_Juridica_2.ViewModel.PessoaViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCadastro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PessoaFisica.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PessoaFisica.CPF)
+        </th>
+        <th></th>
+    </tr>
+    @foreach(var cliente in Model)
+    {
+        if(cliente.TipoPessoa == CRUD_Pessoa_Fisica_Juridica_2.ViewModel.TipoPessoaViewModel.PessoaFisica)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(model => cliente.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(model => cliente.DataCadastro)
+        </td>
+        <td>
+            @Html.DisplayFor(model => cliente.PessoaFisica.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(model => cliente.PessoaFisica.CPF)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = cliente.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = cliente.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = cliente.Id })
+        </td>
+    </tr>
+        }
+    }
+
+</table>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataCadastro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PessoaJuridica.RazaoSocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PessoaJuridica.CNPJ)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var cliente in Model)
+    {
+        if (cliente.TipoPessoa == CRUD_Pessoa_Fisica_Juridica_2.ViewModel.TipoPessoaViewModel.PessoaJuridica)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => cliente.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => cliente.DataCadastro)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => cliente.PessoaJuridica.RazaoSocial)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => cliente.PessoaJuridica.CNPJ)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = cliente.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = cliente.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = cliente.Id })
+                </td>
+            </tr>
+        }
+    }
+
+</table>

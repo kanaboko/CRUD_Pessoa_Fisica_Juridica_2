@@ -1,0 +1,151 @@
+﻿@model CRUD_Pessoa_Fisica_Juridica_2.ViewModel.PessoaViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+@if (Model.TipoPessoa == CRUD_Pessoa_Fisica_Juridica_2.ViewModel.TipoPessoaViewModel.PessoaFisica)
+{
+    <div>
+        <h4>PessoaFisica - @Model.PessoaFisica.Nome</h4>
+        <h5>Cadastrado em: @Model.DataCadastro.ToString()</h5>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.PessoaFisica.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PessoaFisica.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PessoaFisica.RG)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PessoaFisica.RG)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PessoaFisica.CPF)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PessoaFisica.CPF)
+            </dd>
+
+        </dl>
+    </div>
+
+    if (Model.PessoaFisica.Endereco.Any())
+    {
+        foreach (var endereco in Model.PessoaFisica.Endereco)
+        {
+            <table class="table">
+
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(model => endereco.Logradouro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => endereco.Numero)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => endereco.Bairro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => endereco.Cidade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => endereco.Estado)
+                    </td>
+
+                </tr>
+
+            </table>
+        }
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Nenhum Endereço Cadastrado.
+                </th>
+            </tr>
+        </table>
+    }
+}
+else
+{
+        <div>
+            <h4>PessoaJuridica - @Model.PessoaJuridica.RazaoSocial</h4>
+            <h5>Cadastrado em: @Model.DataCadastro.ToString()</h5>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.PessoaJuridica.RazaoSocial)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PessoaJuridica.RazaoSocial)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PessoaJuridica.CNPJ)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PessoaJuridica.CNPJ)
+                </dd>
+
+            </dl>
+        </div>
+
+    if (Model.PessoaJuridica.Endereco.Any())
+    {
+        foreach (var endereco in Model.PessoaJuridica.Endereco)
+        {
+            <table class="table">
+
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(model => endereco.Logradouro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => endereco.Numero)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => endereco.Bairro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => endereco.Cidade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => endereco.Estado)
+                    </td>
+
+                </tr>
+
+            </table>
+        }
+    }
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Nenhum Endereço Cadastrado.
+                </th>
+            </tr>
+        </table>
+    }
+}
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
