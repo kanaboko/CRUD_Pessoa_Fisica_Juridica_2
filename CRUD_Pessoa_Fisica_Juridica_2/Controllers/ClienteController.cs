@@ -180,7 +180,7 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
+                
                 _service.Deletar(id);
                 return RedirectToAction("Index");
             }
