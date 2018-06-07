@@ -12,6 +12,8 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.AutoMapper
             CreateMap<PessoaFisica, PessoaFisicaViewModel>();
             CreateMap<Endereco, EnderecoViewModel>();
             CreateMap<PessoaJuridica, PessoaJuridicaViewModel>();
+            CreateMap<Foto, FotoViewModel>();
+
         }
     }
 }

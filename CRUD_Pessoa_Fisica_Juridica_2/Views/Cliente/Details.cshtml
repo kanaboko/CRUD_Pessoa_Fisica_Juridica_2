@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Details";
+
 }
 
 <h2>Details</h2>
@@ -12,6 +13,17 @@
         <h5>Cadastrado em: @Model.DataCadastro.ToString()</h5>
         <hr />
         <dl class="dl-horizontal">
+            <dt>
+                Foto
+            </dt>
+            @foreach (var foto in Model.Fotos)
+            {
+
+                <dd>
+                    <img src="@Url.Action("ObterImagem","Cliente",new { path=foto.FileName})" alt="@foto.FileName" class="img-circle img-responsive" />
+                </dd>
+            }
+
             <dt>
                 @Html.DisplayNameFor(model => model.PessoaFisica.Nome)
             </dt>
@@ -81,29 +93,29 @@
 }
 else
 {
-        <div>
-            <h4>PessoaJuridica - @Model.PessoaJuridica.RazaoSocial</h4>
-            <h5>Cadastrado em: @Model.DataCadastro.ToString()</h5>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.PessoaJuridica.RazaoSocial)
-                </dt>
+    <div>
+        <h4>PessoaJuridica - @Model.PessoaJuridica.RazaoSocial</h4>
+        <h5>Cadastrado em: @Model.DataCadastro.ToString()</h5>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.PessoaJuridica.RazaoSocial)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.PessoaJuridica.RazaoSocial)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.PessoaJuridica.RazaoSocial)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.PessoaJuridica.CNPJ)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.PessoaJuridica.CNPJ)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.PessoaJuridica.CNPJ)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.PessoaJuridica.CNPJ)
+            </dd>
 
-            </dl>
-        </div>
+        </dl>
+    </div>
 
     if (Model.PessoaJuridica.Endereco.Any())
     {

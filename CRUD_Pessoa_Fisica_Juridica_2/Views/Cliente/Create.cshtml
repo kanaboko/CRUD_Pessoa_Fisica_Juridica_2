@@ -1,131 +1,177 @@
-﻿@model CRUD_Pessoa_Fisica_Juridica_2.ViewModel.AdicionarClienteViewModel
+﻿@model CRUD_Pessoa_Fisica_Juridica_2.ViewModel.ClienteViewModel
 @using CRUD_Pessoa_Fisica_Juridica_2.ViewModel
 
 @{
     ViewBag.Title = "Create";
+    //WebImage photo = null;
+    //var newFileName = "";
+    //var imagePath = "";
+    //var imageThumbPath = "";
+
+    //if (IsPost)
+    //{
+    //    photo = WebImage.GetImageFromRequest();
+    //    if (photo != null)
+    //    {
+    //        newFileName = Guid.NewGuid().ToString() + "_" +
+    //            Path.GetFileName(photo.FileName);
+    //        //imagePath = @"images\" + newFileName;
+    //        //photo.Save(@"~\" + imagePath);
+
+    //        imageThumbPath = @"images\thumbs\" + newFileName;
+    //        photo.Resize(width: 60, height: 60, preserveAspectRatio: true,
+    //           preventEnlarge: true);
+    //        //photo.Save(@"~\" + imageThumbPath);
+    //    }
+    //}
 }
 
 <h2>Create</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(new { enctype = "multipart/form-data", id = "clienteForm" }))
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <h4>PessoaFisica</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @{
-                var lista = Enum.GetValues(typeof(TipoPessoaViewModel));
-            }
-            @foreach (var radio in lista)
-            {
-                @Html.RadioButtonFor(model => model.Pessoa.TipoPessoa, radio.ToString());
-                @radio.ToString();
-            }
-            @*<div class="col-md-10">
-                    @Html.RadioButtonFor(r => r.Pessoa.TipoPessoa, ListaTipoPessoa.PessoaFisica, new { htmlAttributes = new { @class = "form-control" } })@Html.Label(ListaTipoPessoa.PessoaFisica.ToString(), new { @class="lbl"})
-                    @Html.RadioButtonFor(r => r.Pessoa.TipoPessoa, ListaTipoPessoa.PessoaJuridica, new { htmlAttributes = new { @class = "form-control" } })@Html.Label(ListaTipoPessoa.PessoaJuridica.ToString())
-                </div>*@
-        </div>
-        <div id="replace">
-            @Html.Partial("_AdicionarClienteFisico")
-        </div>
-        @*<div class="panel panel-default" id="painelPessoaFisica" >
-                <div class="panel-heading">Pessoa Fisica</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PessoaFisica.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.PessoaFisica.Nome, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PessoaFisica.Nome, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PessoaFisica.RG, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.PessoaFisica.RG, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PessoaFisica.RG, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PessoaFisica.CPF, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.PessoaFisica.CPF, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PessoaFisica.CPF, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default" id="painelPessoaJuridica" >
-                <div class="panel-heading">Pessoa Juridica</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.pessoaJuridica.RazaoSocial, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.pessoaJuridica.RazaoSocial, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.pessoaJuridica.RazaoSocial, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.pessoaJuridica.CNPJ, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.pessoaJuridica.CNPJ, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.pessoaJuridica.CNPJ, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
+<div class="form-horizontal">
+    <h4>PessoaFisica</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @{
+            var lista = Enum.GetValues(typeof(TipoPessoaViewModel));
+        }
+        @foreach (var radio in lista)
+        {
+            @Html.RadioButtonFor(model => model.Pessoa.TipoPessoa, radio.ToString());
+            @radio.ToString();
+        }
+        @*<div class="col-md-10">
+                @Html.RadioButtonFor(r => r.Pessoa.TipoPessoa, ListaTipoPessoa.PessoaFisica, new { htmlAttributes = new { @class = "form-control" } })@Html.Label(ListaTipoPessoa.PessoaFisica.ToString(), new { @class="lbl"})
+                @Html.RadioButtonFor(r => r.Pessoa.TipoPessoa, ListaTipoPessoa.PessoaJuridica, new { htmlAttributes = new { @class = "form-control" } })@Html.Label(ListaTipoPessoa.PessoaJuridica.ToString())
             </div>*@
+    </div>
+    <div id="replace">
+        @Html.Partial("_AdicionarClienteFisico")
+    </div>
+    @*<div class="panel panel-default" id="painelPessoaFisica" >
+            <div class="panel-heading">Pessoa Fisica</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PessoaFisica.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PessoaFisica.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PessoaFisica.Nome, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Endereco.Logradouro, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Endereco.Logradouro, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PessoaFisica.RG, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PessoaFisica.RG, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PessoaFisica.RG, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PessoaFisica.CPF, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PessoaFisica.CPF, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PessoaFisica.CPF, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="panel panel-default" id="painelPessoaJuridica" >
+            <div class="panel-heading">Pessoa Juridica</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.pessoaJuridica.RazaoSocial, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.pessoaJuridica.RazaoSocial, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.pessoaJuridica.RazaoSocial, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Endereco.Numero, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Endereco.Numero, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Endereco.Numero, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.pessoaJuridica.CNPJ, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.pessoaJuridica.CNPJ, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.pessoaJuridica.CNPJ, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
+        </div>*@
+    
+    <div class="form-group">
+        @Html.LabelFor(model => model.Foto, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div>
+            <div id="drop-target" style="margin:30px; width:300px; height:300px; border:1px dotted grey;">Drag & drop your file here...</div>
+            <input type="file" name="fotoList" id="fotoList" multiple="multiple" data-placeholder="Nenhuma Foto" data-buttonname="btn-primary" data-buttontext="Procurar">
+            <output id="fileInfo"></output>
         </div>
+        <div id="fotos">
+            <canvas id="myCanvas"></canvas>
+        </div>
+        @*<div class="col-md-3">
+                <input type="file" name="foto" id="foto" class="filestyle input-sm" data-placeholder="Nenhuma Foto" data-buttonname="btn-primary" data-buttontext="Procurar">
+                @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
+            </div>*@
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Endereco.Bairro, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Endereco.Bairro, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Endereco.Bairro, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    @*<div class="form-group">
+        @Html.HiddenFor(model => model.Foto2, new { id = "foto2" })
+    </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Endereco.Cidade, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Endereco.Cidade, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Endereco.Cidade, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    <div id="fotoTeste">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Endereco.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Endereco.Estado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Endereco.Estado, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Endereco.Logradouro, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Endereco.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Endereco.Logradouro, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Endereco.Numero, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Endereco.Numero, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Endereco.Numero, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Endereco.Bairro, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Endereco.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Endereco.Bairro, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Endereco.Cidade, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Endereco.Cidade, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Endereco.Cidade, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Endereco.Estado, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Endereco.Estado, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Endereco.Estado, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @*<input type="button" value="Create" id="btnCreate" class="btn btn-default" />*@
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
 }
 
 <div>
@@ -139,45 +185,244 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
 
-    //$("#painelPessoaJuridica").hide();
 
     $("input[value='PessoaFisica']").attr("checked", "checked");
     $("input[type='radio']").on("click", function () {
-        //$("#myDiv").html($("input:checked").val() + " is checked!");
-
-        //$("input:checked").val() == "PessoaFisica" ? ($("#painelPessoaJuridica").hide(), $("#painelPessoaFisica").show(), HideValidationSummary()) : ($("#painelPessoaJuridica").show(), $("#painelPessoaFisica").hide(), $("#painelPessoaJuridica > [data-val]").attr("data-val", "false"));
         $("input:checked").val() == "PessoaFisica" ? ($("#replace").load('@Url.Action("CreatePessoaFisica_PartialView","Cliente")')) : ($("#replace").load('@Url.Action("CreatePessoaJuridica_PartialView","Cliente")'));
     });
 
+    </script>
 
-    //$("input[type='radio']").on("click", function () {
-    //        $.ajax({
-    //            url: this.action,
-    //            type: this.method,
-    //            data: $(this).serialize(),
-    //            success: function (result) {
-    //                var ind = result.indice;
-    //                if (result.success && result.tipo == "pf") {
-    //                    $('#myModal').modal('hide');
-    //                    $('#replacePessoaFisica').load(result.url); // Carrega o resultado HTML para a div demarcada
-    //                } else if (result.success && result.tipo == "pj") {
-    //                    $('#myModal').modal('hide');
-    //                    $('#replacePessoaJuridica').load(result.url); // Carrega o resultado HTML para a div demarcada
-    //                } else if (result.success && result.tipo == "enderecoFisico") {
-    //                    $('#myModal').modal('hide');
-    //                    $('#replaceEnderecoPessoaFisica').load(result.url); // Carrega o resultado HTML para a div demarcada
+    @*<script>
+        function ajaxPost(formData) {
+            var imageList = resizeImage(formData[6].files);
+            formData.set("foto", imageList);
+            var ajaxConfig = {
+                type: "POST",
+                url: "/Cliente/Create",
+                data: new FormData(formData),
+                success: function (result) {
+                    alert(result);
+                    window.location.href = "/Cliente/Create";
+                }
+            }
+            if ($(formData).attr('enctype') == "multipart/form-data") {
+                ajaxConfig["contentType"] = false;
+                ajaxConfig["processData"] = false;
+            }
+            $.ajax(ajaxConfig);
+            return false;
+        }
 
-    //                } else if (result.success && result.tipo == "enderecoJuridico") {
-    //                    $('#myModal').modal('hide');
-    //                    $('#replace-' + ind).load(result.url); // Carrega o resultado HTML para a div demarcada
-    //                } else {
-    //                    $('#myModalContent').html(result);
-    //                    bindForm(dialog);
-    //                }
-    //            }
-    //        });
-    //        return false;
-    //    });
+        function resizeImage(obj) {
+            //var file = obj.dataTransfer.files[0]; //event.target.files[0]; /* now you can work with the file list */
+            var imagem = new Image();
+            var divFotos = document.getElementById("fotos");
+
+            imagem.onload = function() {
+                    var MAX_WIDTH = 640;
+                    var MAX_HEIGHT = 480;
+                    var width = imagem.width;
+                    var height = imagem.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+                    var canvas = document.createElement("canvas");
+                    divFotos.appendChild(canvas);
+                    canvas.width = width;
+                    canvas.height = height;
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(imagem, 0, 0, width, height);
+                    var imageFile = canvas.toDataURL("image/jpeg");
+                    
+            };
+            imagem.src = window.URL.createObjectURL(obj[0]);
+            return imageFile;
+
+
+                //$('form').submit(function () {
+                //    var formData = new FormData();
+                //    formData.append("img", imageFile);
+                //    formData.append("idPessoa", $("#PessoaFisica_CPF").val());
+                //    var xhr = new XMLHttpRequest();
+                //    xhr.open('POST', '/Cliente/SalvarImagem', true);
+                //    xhr.send(formData);
+                //});
+            
+
+
+        }    
+
+    </script>*@
+
+    @*<script>
+        $('form').submit(function () {
+            //var url = "/Cliente/Create";
+            //var xhr = new XMLHttpRequest();
+            //var form = $('#clienteForm');
+            //var fd = new FormData(form);
+
+            //xhr.open("POST", url, true);
+            //xhr.onreadystatechange = function () {
+            //    if (xhr.readyState == 4 && xhr.status == 200) {
+            //        alert(xhr.responseText); // handle response.
+            //    }
+            //};
+            var objeto = document.getElementById("myCanvas").toDataURL();
+            //form.append("Foto2", objeto);
+            // Initiate a multipart/form-data upload
+            //xhr.send(form);
+            $("#foto2").val(objeto);
+            //form.submit();
+
+
+        });
+
+       
+        var target = document.getElementById("drop-target");
+        target.addEventListener("dragover", function (e) { e.preventDefault(); }, true);
+        target.addEventListener("drop", function (e) {
+            e.preventDefault();
+            loadImage(e.dataTransfer.files[0]);
+        }, true);
+
+        var MAX_HEIGHT = 480;
+        function render(src) {
+            var image = new Image();
+            image.onload = function () {
+                var canvas = document.getElementById("myCanvas");
+                if (image.height > MAX_HEIGHT) {
+                    image.width *= MAX_HEIGHT / image.height;
+                    image.height = MAX_HEIGHT;
+                }
+                var ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.width = image.width;
+                canvas.height = image.height;
+                ctx.drawImage(image, 0, 0, image.width, image.height);
+            };
+            image.src = src;
+        };
+
+        function loadImage(src) {
+            //	Prevent any non-image file type from being read.
+            if (!src.type.match(/image.*/)) {
+                console.log("The dropped file is not an image: ", src.type);
+                return;
+            }
+
+            //	Create our FileReader and run the results through the render function.
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                render(e.target.result);
+            };
+            reader.readAsDataURL(src);
+        }
+    </script>*@
+
+    <script>
+        //$('form').submit(function () {
+        //    //var url = "/Cliente/Create";
+        //    //var xhr = new XMLHttpRequest();
+        //    //var form = $('#clienteForm');
+        //    //var fd = new FormData(form);
+
+        //    //xhr.open("POST", url, true);
+        //    //xhr.onreadystatechange = function () {
+        //    //    if (xhr.readyState == 4 && xhr.status == 200) {
+        //    //        alert(xhr.responseText); // handle response.
+        //    //    }
+        //    //};
+        //    var objeto = document.getElementById("myCanvas").toDataURL();
+        //    //form.append("Foto2", objeto);
+        //    // Initiate a multipart/form-data upload
+            //    //xhr.send(form);
+            
+        //    //form.submit();
+        //    for (var i = 0; i < data.length; i++) {
+        //        $('#foto' + i).val(data[i]);
+        //    }
+
+        //});
+        var MAX_HEIGHT = 480;
+        function render(src) {
+            var image = new Image();
+            var div = document.getElementById("fotoTeste");
+            image.onload = function () {
+                var canvas = document.getElementById("myCanvas");
+                if (image.height > MAX_HEIGHT) {
+                    image.width *= MAX_HEIGHT / image.height;
+                    image.height = MAX_HEIGHT;
+                }
+                var ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.width = image.width;
+                canvas.height = image.height;
+                ctx.drawImage(image, 0, 0, image.width, image.height);
+                data.push(canvas.toDataURL());
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.id = data.length;
+                input.name = "foto2";
+                input.value = canvas.toDataURL();
+                div.appendChild(input);             
+
+                
+            };
+            image.src = src;
+        };
+
+        function fileSelect(evt) {
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+                //var files = evt.dataTransfer.files;
+
+                var result = '';
+                var file;
+                var fileInfo = document.getElementById("fileInfo");
+                
+
+                for (var i = 0; file = evt[i]; i++) {
+                    var reader = new FileReader();                   
+
+                    reader.onload = function (e) {
+                        var div = document.createElement("div");                        
+                        div.innerHTML = '<img style="width: 90px;" src="' + e.target.result + '" />';
+                        fileInfo.appendChild(div);
+                        render(e.target.result);
+                    };
+                    //result += '<li>' + file.name + ' ' + file.size + ' bytes</li>';
+                    reader.readAsDataURL(file);
+                }
+                
+                //document.getElementById('fileInfo').innerHTML = '<ul>' + result + '</ul>';
+            } else {
+                alert('The File APIs are not fully supported in this browser.');
+            }            
+        }
+
+        document.getElementById('fotoList').addEventListener('change', fileSelect, false);
+
+        function dragOver(evt) {
+            //evt.stopPropagation();
+            evt.preventDefault();
+            evt.dataTransfer.dropEffect = 'copy';
+        }
+
+        var dropTarget = document.getElementById('drop-target');
+        dropTarget.addEventListener('dragover', dragOver, false);
+        dropTarget.addEventListener('drop', function (e) {
+            e.preventDefault();
+            fileSelect(e.dataTransfer.files);
+        }, false);
 
     </script>
 }

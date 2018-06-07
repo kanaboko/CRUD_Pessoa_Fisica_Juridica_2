@@ -1,0 +1,76 @@
+﻿
+
+@if (ViewBag.FotoList.Count != 0)
+{
+
+    var itensLinha = 3;
+    var item = 0;
+
+    <div class="row">
+        @foreach (var foto in ViewBag.FotoList)
+        {
+            if (item == itensLinha)
+            {
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <div class="thumbnail">
+                            <img src="@Url.Action("ObterImagem","Cliente",new { path=foto.FileName})" alt="@foto.FileName" />
+                            <div class="caption">
+                                <h3>Thumbnail label</h3>
+                                <p>...</p>
+                                <p><a href="@Url.Action("DeleteImagem","Cliente",new { pessoaId= ViewBag.PessoaId, filePath = foto.FilePath})" class="btn btn-primary" role="button">Button</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                item = 0;
+            }
+            else
+            {
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img src="@Url.Action("ObterImagem","Cliente",new { path=foto.FileName})" alt="@foto.FileName" />
+                        <div class="caption">
+                            <h3>Thumbnail label</h3>
+                            <p>...</p>
+                            <p><a href="@Url.Action("DeleteImagem","Cliente",new { pessoaId= ViewBag.PessoaId, filePath = foto.FilePath, id = foto.Id})" id="deleteImagem" class="btn btn-primary" role="button">Button</a> </p>
+                        </div>
+                    </div>
+                </div>
+                item++;
+            }
+
+        }
+    </div>
+
+
+
+}
+else
+{
+    <div class="row">
+        <div class="jumbotron">
+            <h4>Nenhuma foto cadastrada</h4>
+        </div>
+    </div>
+}
+
+<script>
+    $("a.btn").click(function () {
+        $.ajax({
+            url: this.href,
+            type: "POST",
+            data: null,
+            success: function (result) {
+                if (result.success) {
+                    $('#replaceFotos').load(result.url); // Carrega o resultado HTML para a div demarcada
+                } else {
+                    $('#replaceFotos').html(result);
+                }
+            }
+        });
+        return false;
+    });
+
+</script>
+

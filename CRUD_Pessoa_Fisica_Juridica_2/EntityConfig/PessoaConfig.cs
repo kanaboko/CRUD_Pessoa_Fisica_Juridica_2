@@ -21,6 +21,9 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.EntityConfig
                 .WithRequired(p => p.Pessoa);
             HasOptional(p => p.PessoaJuridica)
                 .WithRequired(p => p.Pessoa);
+            HasMany(p => p.ListaDeFotos)
+                .WithRequired(p => p.Pessoa)
+                .HasForeignKey(p => p.Pessoa_Id);
 
             ToTable("Pessoas");
         }

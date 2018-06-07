@@ -1,0 +1,95 @@
+﻿
+
+<div class="form-group">
+    <div>
+        <div id="drop-target" style="margin:30px; width:300px; height:300px; border:1px dotted grey;">Arraste as fotos aqui...</div>
+        <input type="file" name="fotoList" id="fotoList" multiple="multiple" data-placeholder="Nenhuma Foto" data-buttonname="btn-primary" data-buttontext="Procurar">
+        <output id="fileInfo"></output>
+    </div>
+    <div id="fotos">
+        <canvas id="myCanvas"></canvas>
+    </div>
+</div>
+
+<div id="fotoTeste">
+
+</div>
+
+
+    <script>
+        var data = new Array();
+        var MAX_HEIGHT = 480;
+        function render(src) {
+            var image = new Image();
+            var div = document.getElementById("fotoTeste");
+            image.onload = function () {
+                var canvas = document.getElementById("myCanvas");
+                if (image.height > MAX_HEIGHT) {
+                    image.width *= MAX_HEIGHT / image.height;
+                    image.height = MAX_HEIGHT;
+                }
+                var ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                canvas.width = image.width;
+                canvas.height = image.height;
+                ctx.drawImage(image, 0, 0, image.width, image.height);
+                data.push(canvas.toDataURL());
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.id = data.length;
+                input.name = "foto2";
+                input.value = canvas.toDataURL();
+                div.appendChild(input);
+
+            };
+            image.src = src;
+        };
+
+
+        function fileSelect(evt) {
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+                //var files = evt.dataTransfer.files;
+
+                var result = '';
+                var file;
+                var fileInfo = document.getElementById("fileInfo");
+
+
+                for (var i = 0; file = evt[i]; i++) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var div = document.createElement("div");
+                        div.innerHTML = '<img style="width: 90px;" src="' + e.target.result + '" />';
+                        fileInfo.appendChild(div);
+                        render(e.target.result);
+                    };
+                    //result += '<li>' + file.name + ' ' + file.size + ' bytes</li>';
+                    reader.readAsDataURL(file);
+                }
+
+                //document.getElementById('fileInfo').innerHTML = '<ul>' + result + '</ul>';
+            } else {
+                alert('The File APIs are not fully supported in this browser.');
+            }
+        }
+
+        document.getElementById('fotoList').addEventListener('change', fileSelect, false);
+
+        function dragOver(evt) {
+            //evt.stopPropagation();
+            evt.preventDefault();
+            evt.dataTransfer.dropEffect = 'copy';
+        }
+
+        var dropTarget = document.getElementById('drop-target');
+        dropTarget.addEventListener('dragover', dragOver, false);
+        dropTarget.addEventListener('drop', function (e) {
+            e.preventDefault();
+            fileSelect(e.dataTransfer.files);
+        }, false);
+
+    </script>
+
+
+

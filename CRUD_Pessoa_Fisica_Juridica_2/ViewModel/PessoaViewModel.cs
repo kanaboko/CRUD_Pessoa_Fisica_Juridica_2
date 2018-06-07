@@ -11,6 +11,7 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.ViewModel
         public PessoaViewModel()
         {
             Id = Guid.NewGuid();
+            Fotos = new List<FotoViewModel>();
         }
         [Key]
         public Guid Id { get; set; }
@@ -24,5 +25,6 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.ViewModel
 
         public virtual PessoaFisicaViewModel PessoaFisica { get; set; }
         public virtual PessoaJuridicaViewModel PessoaJuridica { get; set; }
+        public virtual ICollection<FotoViewModel> Fotos { get; set; }
     }
 }

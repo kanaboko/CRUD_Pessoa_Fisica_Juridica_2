@@ -2,6 +2,7 @@
 using CRUD_Pessoa_Fisica_Juridica_2.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -26,6 +27,9 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Controllers
         public ActionResult Details(Guid id)
         {
             var pessoa = _service.ObterPorIdPessoa(id);
+            var fotos = _service.ObterImagemCliente(id);
+            pessoa.Fotos = fotos;
+            
             return View(pessoa);
         }
 
@@ -47,7 +51,8 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Controllers
 
         // POST: Cliente/Create
         [HttpPost]
-        public ActionResult Create(AdicionarClienteViewModel cliente)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(ClienteViewModel cliente)
         {
             try
             {
@@ -96,14 +101,18 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Controllers
         public ActionResult Edit(Guid id)
         {            
             var pessoa = _service.ObterPorIdPessoa(id);
+            var cliente = new ClienteViewModel();
+            ViewBag.FotoList = _service.ObterImagemCliente(id);
             ViewBag.PessoaId = id;
             ViewBag.TipoPessoa = pessoa.TipoPessoa;
             switch (pessoa.TipoPessoa)
             {
                 case TipoPessoaViewModel.PessoaFisica:
-                    return View("EditPessoaFisica", pessoa.PessoaFisica);                    
+                    cliente.PessoaFisica = pessoa.PessoaFisica;                    
+                    return View("EditPessoaFisica", cliente);                    
                 case TipoPessoaViewModel.PessoaJuridica:
-                    return View("EditPessoaJuridica", pessoa.PessoaJuridica);
+                    cliente.PessoaJuridica = pessoa.PessoaJuridica;
+                    return View("EditPessoaJuridica", cliente);
                 default:
                     break;
             }
@@ -112,11 +121,11 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Controllers
 
         // POST: Cliente/Edit/5
         [HttpPost]
-        public ActionResult EditPessoaFisica(PessoaFisicaViewModel obj)
+        public ActionResult EditPessoaFisica(ClienteViewModel obj)
         {
             try
             {
-                _service.Atualizar(obj);
+                _service.AtualizarPessoaFisica(obj);
 
                 return RedirectToAction("Index");
             }
@@ -127,11 +136,11 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditPessoaJuridica(PessoaJuridicaViewModel obj)
+        public ActionResult EditPessoaJuridica(ClienteViewModel obj)
         {
             try
             {
-                _service.Atualizar(obj);
+                _service.AtualizarPessoaJuridica(obj);
 
                 return RedirectToAction("Index");
             }
@@ -216,6 +225,21 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Controllers
             }
         }
 
+        
+        public ActionResult DeleteImagem(Guid pessoaId, string filePath, Guid id)
+        {
+            try
+            {
+                _service.DeletarImagemCliente(filePath, id);
+                string url = Url.Action("ListarImagens", "Cliente", new { id = pessoaId });
+                return Json(new { success = true, url = url });
+
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+        }
 
         public ActionResult ListarEnderecos(Guid id, string tipoPessoa = null)
         {
@@ -232,5 +256,38 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Controllers
             }
             return null;
         }
+
+        public ActionResult ListarImagens(Guid id)
+        {
+            ViewBag.FotoList = _service.ObterImagemCliente(id);
+            return PartialView("_ListarImagem", ViewBag.FotoList);
+        }
+
+        //public ActionResult ObterImagem(Guid id)
+        //{
+        //    const string root = @"C:\Users\Alexandre\Documents\Visual Studio 2017\Projects\CRUD_Pessoa_Fisica_Juridica_2\CRUD_Pessoa_Fisica_Juridica_2\src\contents\clientes\";
+        //    var foto = Directory.GetFiles(root, id+"*").FirstOrDefault();
+        //    return File(foto, "image/jpeg");            
+        //}
+
+        public ActionResult ObterImagem(string path)
+        {
+            const string root = @"C:\Users\Alexandre\Documents\Visual Studio 2017\Projects\CRUD_Pessoa_Fisica_Juridica_2\CRUD_Pessoa_Fisica_Juridica_2\src\contents\clientes\";
+            var foto = Directory.GetFiles(root, path).FirstOrDefault();
+            return File(foto, "image/jpeg");
+        }
+
+        
+        public ActionResult SalvarImagem(List<string> img, Guid idPessoa)
+        {
+            _service.SalvarImagemCliente(img, idPessoa);
+            return RedirectToAction("Index");
+        }
+
+        
+
+        
+
+        
     }
 }

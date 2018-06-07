@@ -19,6 +19,7 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Context
         public DbSet<PessoaFisica> PessoaFisicas { get; set; }
         public DbSet<PessoaJuridica> PessoaJuridicas { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Foto> Fotos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -30,6 +31,7 @@ namespace CRUD_Pessoa_Fisica_Juridica_2.Context
             modelBuilder.Configurations.Add(new PessoaFisicaConfig());
             modelBuilder.Configurations.Add(new PessoaJuridicaConfig());
             modelBuilder.Configurations.Add(new EnderecoConfig());
+            modelBuilder.Configurations.Add(new FotoConfig());
 
             modelBuilder.Properties()
                 .Where(mo => mo.Name == mo.ReflectedType.Name + "Id")
